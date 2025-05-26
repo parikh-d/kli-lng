@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kotak Life Learning App</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Tablet and Desktop Responsive */
+      @media (min-width: 768px) {
+        .container {
+          max-width: 720px;
+          padding: 0 30px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .container {
+          max-width: 1200px;
+          padding: 0 40px;
+        }
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #003874 0%, #004a95 100%);
+        color: white;
+        padding: 60px 0 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(237, 28, 36, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      .logo {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .tagline {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+        animation: slideUp 0.8s ease-out;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+        opacity: 0.9;
+        position: relative;
+        z-index: 2;
+        animation: slideUp 0.8s ease-out 0.2s both;
+      }
+
+      /* Desktop Header Styles */
+      @media (min-width: 768px) {
+        .header {
+          padding: 80px 0 100px;
+        }
+
+        .logo {
+          font-size: 36px;
+        }
+
+        .tagline {
+          font-size: 18px;
+        }
+
+        .hero-title {
+          font-size: 48px;
+          margin-bottom: 20px;
+        }
+
+        .hero-subtitle {
+          font-size: 22px;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+      }
+
+      /* Features */
+      .features {
+        padding: 60px 0;
+        background: #f8f9fa;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      /* Tablet Features Layout */
+      @media (min-width: 768px) {
+        .features {
+          padding: 80px 0;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 30px;
+        }
+      }
+
+      /* Desktop Features Layout */
+      @media (min-width: 1024px) {
+        .features {
+          padding: 100px 0;
+        }
+
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 40px;
+          max-width: 900px;
+          margin: 0 auto;
+        }
+      }
+
+      .feature-card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #ed1c24;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeInUp 0.6s ease-out;
+        height: fit-content;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-card:nth-child(even) {
+        border-left-color: #003874;
+      }
+
+      /* Desktop Feature Cards */
+      @media (min-width: 768px) {
+        .feature-card {
+          padding: 40px 35px;
+        }
+
+        .feature-icon {
+          width: 70px;
+          height: 70px;
+          font-size: 28px;
+        }
+
+        .feature-title {
+          font-size: 22px;
+        }
+
+        .feature-description {
+          font-size: 16px;
+        }
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #003874, #004a95);
+        color: white;
+      }
+
+      .feature-card:nth-child(even) .feature-icon {
+        background: linear-gradient(135deg, #ed1c24, #ff3a45);
+      }
+
+      .feature-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #003874;
+      }
+
+      .feature-description {
+        color: #666;
+        line-height: 1.5;
+      }
+
+      /* CTA Section */
+      .cta-section {
+        background: linear-gradient(135deg, #ed1c24 0%, #ff3a45 100%);
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 56, 116, 0.1) 0%,
+          transparent 70%
+        );
+        animation: pulse 6s ease-in-out infinite reverse;
+      }
+
+      .cta-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .cta-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .download-btn {
+        background: white;
+        color: #ed1c24;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .download-btn:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .download-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Desktop CTA Styles */
+      @media (min-width: 768px) {
+        .cta-section {
+          padding: 80px 0;
+        }
+
+        .cta-title {
+          font-size: 36px;
+          margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+          font-size: 20px;
+          margin-bottom: 40px;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 40px;
+        }
+
+        .download-btn {
+          padding: 18px 50px;
+          font-size: 20px;
+        }
+      }
+
+      /* Footer */
+      .footer {
+        background: #003874;
+        color: white;
+        text-align: center;
+        padding: 40px 0;
+      }
+
+      .footer-text {
+        opacity: 0.8;
+        font-size: 14px;
+      }
+
+      /* Desktop Footer Styles */
+      @media (min-width: 768px) {
+        .footer {
+          padding: 50px 0;
+        }
+
+        .footer-text {
+          font-size: 16px;
+        }
+      }
+
+      /* Animations */
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+      }
+
+      /* Scroll animations */
+      .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease;
+      }
+
+      .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Mobile optimizations */
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 15px;
+        }
+
+        .hero-title {
+          font-size: 28px;
+        }
+
+        .feature-card {
+          padding: 25px 20px;
+        }
+      }
+
+      /* Large Desktop Styles */
+      @media (min-width: 1200px) {
+        .hero-title {
+          font-size: 56px;
+        }
+
+        .hero-subtitle {
+          font-size: 24px;
+        }
+
+        .features-grid {
+          max-width: 1000px;
+          gap: 50px;
+        }
+
+        .cta-title {
+          font-size: 42px;
+        }
+
+        .cta-subtitle {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="logo">Kotak Life</div>
+        <h1 class="hero-title">Learn & Grow</h1>
+        <p class="hero-subtitle">
+          Master skills with AI-powered learning modules and interactive
+          roleplays
+        </p>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section class="features">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Interactive Learning Modules</h3>
+            <p class="feature-description">
+              Engage with comprehensive learning modules designed to enhance
+              your knowledge and skills in insurance and finance.
+            </p>
+          </div>
+
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">🤖</div>
+            <h3 class="feature-title">AI Roleplay Scenarios</h3>
+            <p class="feature-description">
+              Practice real-world situations with AI-powered roleplay scenarios
+              that adapt to your learning pace and style.
+            </p>
+          </div>
+
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">📊</div>
+            <h3 class="feature-title">Progress Tracking</h3>
+            <p class="feature-description">
+              Monitor your learning journey with detailed analytics and
+              personalized recommendations for continuous improvement.
+            </p>
+          </div>
+
+          <div class="feature-card animate-on-scroll">
+            <div class="feature-icon">🎯</div>
+            <h3 class="feature-title">Skill Assessment</h3>
+            <p class="feature-description">
+              Test your knowledge with adaptive assessments that help identify
+              areas for growth and mastery.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">Ready to Transform Your Learning?</h2>
+        <p class="cta-subtitle">
+          Download the app and start your journey to excellence
+        </p>
+        <button class="download-btn" onclick="downloadApp()">
+          Download Now
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="footer-text">
+          © 2025 Kotak Life Insurance. Empowering learning and growth.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Scroll animation
+      function animateOnScroll() {
+        const elements = document.querySelectorAll(".animate-on-scroll");
+
+        elements.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add("animated");
+          }
+        });
+      }
+
+      // Download button functionality
+      function downloadApp() {
+        // Add a subtle animation
+        const btn = document.querySelector(".download-btn");
+        btn.style.transform = "scale(0.95)";
+
+        setTimeout(() => {
+          btn.style.transform = "scale(1)";
+          // Simulate app store redirect or download
+          alert(
+            "Redirecting to app store...\n(This would normally open the app store or trigger a download)"
+          );
+        }, 150);
+      }
+
+      // Add click ripple effect to feature cards
+      document.querySelectorAll(".feature-card").forEach((card) => {
+        card.addEventListener("click", function (e) {
+          const ripple = document.createElement("div");
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+
+          ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: radial-gradient(circle, rgba(0,56,116,0.1) 0%, transparent 70%);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+
+          this.style.position = "relative";
+          this.style.overflow = "hidden";
+          this.appendChild(ripple);
+
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        });
+      });
+
+      // Add ripple animation
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Initialize scroll animations
+      window.addEventListener("scroll", animateOnScroll);
+      window.addEventListener("load", animateOnScroll);
+
+      // Add smooth scrolling
+      document.documentElement.style.scrollBehavior = "smooth";
+
+      // Stagger animation delays for feature cards
+      document.querySelectorAll(".feature-card").forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+      });
+    </script>
+  </body>
+</html>
